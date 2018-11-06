@@ -21,8 +21,15 @@ validates :name, uniqueness: true
 ```ruby
 validates :tires, length: {in: 4..4}
 ```
-では、次にCarのTireってどれも同じ直径じゃないとだめですよね。なので、ここに制限をつけましょう。<br>
-<code>models/car.rb</code>に入れるのだが、これは結構難しいかもしれません。
+そしたら、<code>models/car.rb</code>はこんな感じになるでしょう。<br>
 ```ruby
-
-
+class Car < ApplicationRecord
+    has_one :engine
+    has_many :tires
+    validates :name, :color, presence: true
+    validates :name, uniqueness: true
+    validates :tires, length: {in: 4..4}
+end
+```
+<br>
+以上になります。お疲れさまでした。
