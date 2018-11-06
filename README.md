@@ -25,4 +25,57 @@ rails s
 ```
 もちろん関係性は見えてこないが、しっかりとTireがいくつか作られたのが確認できます。<br>
 <br>
-では、TireとCarに関係性を持たせていきましょう。
+では、TireとCarに関係性を持たせていきましょう。<br>
+まずはCarに<code>has_many</code>を<code>models/car.rb</code>に追加しましょう。<br>
+```ruby
+class Car < ApplicationRecord
+    has_one :engine
+    has_many :tire
+end
+```
+次にTireに<code>belongs_to</code>を<code>models/tire.rb</code>に追加しましょう。<br>
+```ruby
+class Tire < ApplicationRecord
+    belongs_to :car
+end
+```
+これで基本的なセットアップは完了。では、またローカルサーバーで見てみましょう。<br>
+1対1をやったのなら、これではまだ必要なカラムがTireにないことを知っていることでしょう。<br>
+ということで、TireにCarへのリファレンスを追加していきましょう。<br>
+まずはコマンドでマイグレーションを作成。<br>
+```
+rails g migration AddCarToTire car:references
+```
+ここにインデックスを追加しましょう。<code>db/migrate/<date>_add_car_to_tire.rb</code>
+```ruby
+class AddCarToTire < ActiveRecord::Migration[5.2]
+  def change
+    add_reference :tires, :car, foreign_key: true, index: true
+  end
+end
+```
+そしたら、データベースに反映させるためにマイグレート
+```
+rake db:migrate
+```
+では、<code>db/seeds.rb</code>の内容を少し変えて、リファレンスを追加しましょう。<br>
+```ruby
+Car.delete_all
+Engine.delete_all
+Tire.delete_all
+
+car1 = Car.create!(name: "プリウス", color: "シルバー")
+car2 = Car.create!(name: "フェラーリ", color: "赤")
+engine1 = Engine.create!(name: "エンジン1", power: 120, car: car1)
+engine2 = Engine.create!(name: "スーパーエンジン", power: 660, car: car2)
+tire1 = Tire.create!(diameter: 60, car: car1)
+tire2 = Tire.create!(diameter: 60, car: car1)
+tire3 = Tire.create!(diameter: 60, car: car1)
+tire4 = Tire.create!(diameter: 60, car: car1)
+tire5 = Tire.create!(diameter: 40, car: car2)
+tire6 = Tire.create!(diameter: 40, car: car2)
+tire7 = Tire.create!(diameter: 40, car: car2)
+tire8 = Tire.create!(diameter: 40, car: car2)
+```
+そしたら、もう一度ローカルサーバーを開いて確認してみましょう。今度は追加されているはずです。<br>
+
