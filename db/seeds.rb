@@ -9,7 +9,7 @@
 Car.delete_all
 Engine.delete_all
 
-Car.create!(name: "プリウス", color: "シルバー")
-Car.create!(name: "フェラーリ", color: "赤")
-Engine.create!(name: "エンジン1", power: 120)
-Engine.create!(name: "スーパーエンジン", power: 660)
+car1 = Car.create!(name: "プリウス", color: "シルバー")
+car2 = Car.create!(name: "フェラーリ", color: "赤")
+engine1 = Engine.create!(name: "エンジン1", power: 120)
+engine2 = Engine.create!(name: "スーパーエンジン", power: 660)
