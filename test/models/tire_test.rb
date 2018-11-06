@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class TierTest < ActiveSupport::TestCase
+class TireTest < ActiveSupport::TestCase
   # test "the truth" do
   #   assert true
   # end
