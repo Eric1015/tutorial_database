@@ -11,5 +11,5 @@ Engine.delete_all
 
 car1 = Car.create!(name: "プリウス", color: "シルバー")
 car2 = Car.create!(name: "フェラーリ", color: "赤")
-engine1 = Engine.create!(name: "エンジン1", power: 120)
-engine2 = Engine.create!(name: "スーパーエンジン", power: 660)
+engine1 = Engine.create!(name: "エンジン1", power: 120, car: car1)
+engine2 = Engine.create!(name: "スーパーエンジン", power: 660, car: car2)
