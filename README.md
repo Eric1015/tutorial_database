@@ -30,7 +30,7 @@ rails s
 ```ruby
 class Car < ApplicationRecord
     has_one :engine
-    has_many :tire
+    has_many :tires
 end
 ```
 次にTireに<code>belongs_to</code>を<code>models/tire.rb</code>に追加しましょう。<br>
@@ -59,6 +59,7 @@ end
 rake db:migrate
 ```
 では、<code>db/seeds.rb</code>の内容を少し変えて、リファレンスを追加しましょう。<br>
+さらに、Carの方にもTireへのリファレンスを追加しましょう。<br>
 ```ruby
 Car.delete_all
 Engine.delete_all
@@ -76,6 +77,15 @@ tire5 = Tire.create!(diameter: 40, car: car2)
 tire6 = Tire.create!(diameter: 40, car: car2)
 tire7 = Tire.create!(diameter: 40, car: car2)
 tire8 = Tire.create!(diameter: 40, car: car2)
+
+car1.tires << tire1
+car1.tires << tire2
+car1.tires << tire3
+car1.tires << tire4
+car2.tires << tire5
+car2.tires << tire6
+car2.tires << tire7
+car2.tires << tire8
 ```
 そしたら、もう一度ローカルサーバーを開いて確認してみましょう。今度は追加されているはずです。<br>
 
