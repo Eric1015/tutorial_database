@@ -1,6 +1,4 @@
 Rails.application.routes.draw do
-  get 'tires/index'
-  get 'tires/show'
   root "pages#index"
   resources :cars, only: [:index, :show]
   resources :engines, only: [:index, :show]
