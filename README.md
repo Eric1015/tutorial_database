@@ -47,6 +47,22 @@ end
 rails g migration AddCarToEngine car:references
 ```
 ここで足したのはEngineからCarへのリファレンス、つまり、アクセスです。<br>
+<code>db/migrate/<date>_add_car_to_engine.rb</code>というファイルが追加されたと思います。中身はこんな感じ。
+```ruby
+class AddCarToEngine < ActiveRecord::Migration[5.2]
+  def change
+    add_reference :engines, :car, foreign_key: true
+  end
+end
+```
+ここにインデックスを追加しましょう。下記のようにインデックスを加えます。
+```ruby
+class AddCarToEngine < ActiveRecord::Migration[5.2]
+  def change
+    add_reference :engines, :car, foreign_key: true, index: true
+  end
+end
+```
 では、新しいアップデートをデータベースに反映させたいので、<br>
 ```
 rake db:migrate
